@@ -1,15 +1,18 @@
-FROM python:3
 
+FROM python:3.12  # or whatever version you're using
 WORKDIR /data
 
-RUN pip install django==3.2
+# Install Django and any other dependencies
+RUN pip install setuptools wheel && pip install django==3.2
 
+# Copy all project files to the working directory
 COPY . .
 
+# Run Django migrations
 RUN python manage.py migrate
 
-EXPOSE 8000
+# Command to run the Django development server (or adjust as needed)
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-CMD ["python","manage.py","runserver","0.0.0.0:8000"]
 
 
